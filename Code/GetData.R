@@ -3,32 +3,32 @@
 library(RSelenium)
 library(lubridate)
 
-# ¼¼ºÎ Á¤º¸ url¿¡ Á¢¼ÓÇÏ¿© Á¤º¸¸¦ ºÒ·¯¿Í ÁÖ´Â ÇÔ¼ö
-#   ¿©±â¼­ Á¤º¸¶õ ¼Ö·Î/µà¿À ·©Å© ÇÃ·¹ÀÌ ½Ã ¼±È£ÇÏ´Â Æ÷Áö¼Ç°ú ÇØ´ç Æ÷Áö¼Ç ½Â·ü,  
-#   ¼±È£Çß´ø Ã¨ÇÇ¾ð°ú ÇØ´ç Ã¨ÇÇ¾ð ÇÃ·¹ÀÌ ½Ã kda¸¦ ¶æÇÑ´Ù.
+# ì„¸ë¶€ ì •ë³´ urlì— ì ‘ì†í•˜ì—¬ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì™€ ì£¼ëŠ” í•¨ìˆ˜
+#   ì—¬ê¸°ì„œ ì •ë³´ëž€ ì†”ë¡œ/ë“€ì˜¤ ëž­í¬ í”Œë ˆì´ ì‹œ ì„ í˜¸í•˜ëŠ” í¬ì§€ì…˜ê³¼ í•´ë‹¹ í¬ì§€ì…˜ ìŠ¹ë¥ ,  
+#   ì„ í˜¸í–ˆë˜ ì±”í”¼ì–¸ê³¼ í•´ë‹¹ ì±”í”¼ì–¸ í”Œë ˆì´ ì‹œ kdaë¥¼ ëœ»í•œë‹¤.
 bringinfor <- function( url ) {
   
   remDr$navigate(url)
   
-  # Solo/Duo ·©Å© ÇÃ·¹ÀÌ Á¤º¸¸¸ ¼±ÅÃ 
+  # Solo/Duo ëž­í¬ í”Œë ˆì´ ì •ë³´ë§Œ ì„ íƒ 
   filter <- remDr$findElement(using = "xpath", value = "//*[@id=\"right_gametype_soloranked\"]/a")
   filter$clickElement()
-  Sys.sleep(2) # ¿ä¼Ò ¼±ÅÃ ½Ã ·Îµù ½Ã°£¿¡ µû¶ó °ª º¯°æ 
+  Sys.sleep(2) # ìš”ì†Œ ì„ íƒ ì‹œ ë¡œë”© ì‹œê°„ì— ë”°ë¼ ê°’ ë³€ê²½ 
   
-  # °¢ Á¤º¸ ÃßÃâ 
+  # ê° ì •ë³´ ì¶”ì¶œ 
     infor_table <- remDr$findElement(using = "class", value = "GameAverageStats")
     
-    # ¼±È£ Æ÷Áö¼Ç, ÇØ´ç Æ÷Áö¼Ç ½Â·ü 
+    # ì„ í˜¸ í¬ì§€ì…˜, í•´ë‹¹ í¬ì§€ì…˜ ìŠ¹ë¥  
     line_table <- infor_table$findChildElement(using = "class", value = "PositionStatContent")
     line_text <- line_table$getElementText()[[1]]
     line <- substr(line_text,1,regexpr("\n",line_text)-1)
     
     ratio_table <- infor_table$findChildElement(using = "class", value = "WinRatio")
     ratio_text <- ratio_table$getElementText()
-    ratio <- gsub("½Â·ü ","",ratio_text)
+    ratio <- gsub("ìŠ¹ë¥  ","",ratio_text)
     ratio <- gsub("%","",ratio)
     
-    # ¼±È£ Ã¨ÇÇ¾ð, ÇØ´ç Ã¨ÇÇ¾ð kda
+    # ì„ í˜¸ ì±”í”¼ì–¸, í•´ë‹¹ ì±”í”¼ì–¸ kda
     champ_table <- infor_table$findChildElement(using = "class", value = "Name")
     champ <- champ_table$getElementText()[[1]]
     
@@ -39,7 +39,7 @@ bringinfor <- function( url ) {
     return(infor)
 }
 
-shell('docker run -d -p 4445:4444 selenium/standalone-chrome') # Docker·Î ½ÇÇà½Ã Ãß°¡ 
+shell('docker run -d -p 4445:4444 selenium/standalone-chrome') # Dockerë¡œ ì‹¤í–‰ì‹œ ì¶”ê°€ 
 remDr <- remoteDriver(
   remoteServerAddr = 'localhost', 
   port = 4445L,
@@ -49,20 +49,20 @@ remDr$open()
 url_ladder <- "https://www.op.gg/ranking/ladder/"
 for( i in 2:5) url_ladder[i] <- paste0(url_ladder[1], 'page=', i)
 
-# »óÀ§ 500¸íÀÇ ´Ð³×ÀÓ ÃßÃâ 
+# ìƒìœ„ 500ëª…ì˜ ë‹‰ë„¤ìž„ ì¶”ì¶œ 
   name <- c()
-  # 1ÆäÀÌÁö (1~100À§)
-  # 5À§±îÁöÀÇ ´Ð³×ÀÓ ÃßÃâ 
+  # 1íŽ˜ì´ì§€ (1~100ìœ„)
+  # 5ìœ„ê¹Œì§€ì˜ ë‹‰ë„¤ìž„ ì¶”ì¶œ 
   remDr$navigate(url_ladder[1])
   highest_table <- remDr$findElements(using = "class", value = "ranking-highest__name")
   sapply(highest_table, function(x) name <<- c(name, x$getElementText()[[1]] ) )
-  # 6~100À§ÀÇ ´Ð³×ÀÓ ÃßÃâ 
+  # 6~100ìœ„ì˜ ë‹‰ë„¤ìž„ ì¶”ì¶œ 
   for( i in 1:95 ) {
     name_ele <- remDr$findElement(using = "xpath", value = paste0('/html/body/div[2]/div[3]/div[3]/div/div/div/table/tbody/tr[',i,']/td[2]/a/span'))
     name[i+5] <- name_ele$getElementText()[[1]]
   }
   
-  # 2~5ÆäÀÌÁö (101~500À§)
+  # 2~5íŽ˜ì´ì§€ (101~500ìœ„)
   for( j in 2:5 ) {
     remDr$navigate(url_ladder[j])
     for( i in 1:100 ) {
@@ -72,12 +72,12 @@ for( i in 2:5) url_ladder[i] <- paste0(url_ladder[1], 'page=', i)
   }
   name_url <- gsub(" ","+",name)
 
-# °¢ À¯ÀúÀÇ ¼¼ºÎ Á¤º¸ url
+# ê° ìœ ì €ì˜ ì„¸ë¶€ ì •ë³´ url
   url_user <- paste0('https://www.op.gg/summoner/userName=',name_url)
 
   result <- c()
-  # »óÀ§ nÀ§±îÁöÀÇ Á¤º¸ ºÒ·¯¿À±â 
-  n <- 10
+  # ìƒìœ„ nìœ„ê¹Œì§€ì˜ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° 
+  n <- 500
   for( i in 1:n ) result <- rbind(result,bringinfor(url_user[i]))
   LOLData <- data.frame(result[,1],
                        as.numeric(result[,2]),
@@ -85,18 +85,18 @@ for( i in 2:5) url_ladder[i] <- paste0(url_ladder[1], 'page=', i)
                        as.numeric(result[,4]),
                        stringsAsFactors = F)
   rownames(LOLData) <- name[1:n]
-  colnames(LOLData) <- c("¼±È£ ¶óÀÎ", "½Â·ü", "¼±È£ Ã¨ÇÇ¾ð", "kda")
+  colnames(LOLData) <- c("ì„ í˜¸ ë¼ì¸", "ìŠ¹ë¥ ", "ì„ í˜¸ ì±”í”¼ì–¸", "kda")
   
   remDr$close()
 
-# µ¥ÀÌÅÍ ÆÄÀÏ·Î ÀúÀåÇÏ±â 
-  # »ý¼ºÇÒ Æú´õ ÀÌ¸§ 
-  folder <- "D:/±èÁ¾¿ø/´ëÇÐ±³/2ÇÐ³â/2ÇÐ±â/µ¥ÀÌÅÍ ½Ã°¢È­/62/data"
+# ë°ì´í„° íŒŒì¼ë¡œ ì €ìž¥í•˜ê¸° 
+  # ìƒì„±í•  í´ë” ì´ë¦„ 
+  folder <- "D:/ê¹€ì¢…ì›/ëŒ€í•™êµ/2í•™ë…„/2í•™ê¸°/ë°ì´í„° ì‹œê°í™”/62/data"
   
-  # Æú´õ°¡ ¾øÀ¸¸é »ý¼º 
+  # í´ë”ê°€ ì—†ìœ¼ë©´ ìƒì„± 
   if(!dir.exists(folder)) dir.create(folder)
   
-  # working directory º¯°æ 
+  # working directory ë³€ê²½ 
   setwd(folder)
   
   date <- Sys.Date()
@@ -104,6 +104,6 @@ for( i in 2:5) url_ladder[i] <- paste0(url_ladder[1], 'page=', i)
   m <- minute(Sys.time())
   filename <- paste(date, h, m, sep = '-')
   
-  # ÆÄÀÏ ÀúÀå 
+  # íŒŒì¼ ì €ìž¥ 
   write.table(LOLData, file = filename)
   
