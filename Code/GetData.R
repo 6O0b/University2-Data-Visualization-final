@@ -13,7 +13,7 @@ bringinfor <- function( url ) {
   # Solo/Duo 랭크 플레이 정보만 선택 
   filter <- remDr$findElement(using = "xpath", value = "//*[@id=\"right_gametype_soloranked\"]/a")
   filter$clickElement()
-  Sys.sleep(2) # 요소 선택 시 로딩 시간에 따라 값 변경 
+  Sys.sleep(2.5) # 요소 선택 시 로딩 시간에 따라 값 변경 
   
   # 각 정보 추출 
     infor_table <- remDr$findElement(using = "class", value = "GameAverageStats")
