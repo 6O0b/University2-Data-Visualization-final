@@ -25,6 +25,11 @@
 ![3](https://user-images.githubusercontent.com/58083333/70853033-ed8fe600-1eeb-11ea-82ed-8f028f5a48b3.PNG)
 
 
+#### 폴더 구조
+
+
+
+
 #### 발전 방향
 
 1. 티어별 무작위 표본 추출을 하여 KDA, CS, 판수 등에 따른 티어 예측
