@@ -3,6 +3,9 @@
 library(RSelenium)
 library(lubridate)
 
+m <- 5
+n <- 500
+
 # 세부 정보 url에 접속하여 정보를 불러와 주는 함수
 #   여기서 정보란 솔로/듀오 랭크 플레이 시 선호하는 포지션과 해당 포지션 승률,  
 #   선호했던 챔피언과 해당 챔피언 플레이 시 kda를 뜻한다.
@@ -46,6 +49,7 @@ bringinfor <- function( url ) {
     return(infor)
 }
 
+#shell('docker run -d -p 4445:4444 selenium/standalone-chrome')
 remDr <- remoteDriver(
   remoteServerAddr = 'localhost', 
   port = 4445L,
@@ -68,8 +72,8 @@ for( i in 2:5) url_ladder[i] <- paste0(url_ladder[1], 'page=', i)
     name[i+5] <- name_ele$getElementText()[[1]]
   }
   
-  # 2~5페이지 (101~500위)
-  for( j in 2:5 ) {
+  # 2~m페이지 (101~m*100위)
+  for( j in 2:m ) {
     remDr$navigate(url_ladder[j])
     for( i in 1:100 ) {
       name_ele <- remDr$findElement(using = "xpath", value = paste0('/html/body/div[2]/div[3]/div[3]/div/div/div/table/tbody/tr[',i,']/td[2]/a/span'))
@@ -82,8 +86,7 @@ for( i in 2:5) url_ladder[i] <- paste0(url_ladder[1], 'page=', i)
   url_user <- paste0('https://www.op.gg/summoner/userName=',name_url)
 
   result <- c()
-  # 상위 n위까지의 정보 불러오기 
-  n <- 500
+  # 상위 n명까지의 정보 불러오기 
   for( i in 1:n ) result <- rbind(result,bringinfor(url_user[i]))
   LOLData <- data.frame(result[,1],
                        as.numeric(result[,2]),
