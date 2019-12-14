@@ -3,13 +3,13 @@
 library(lubridate)
 library(taskscheduleR)
 
-dir <- 'D:/±èÁ¾¿ø/´ëÇÐ±³/2ÇÐ³â/2ÇÐ±â/µ¥ÀÌÅÍ ½Ã°¢È­/62/code/GetData.R'
+dir <- 'D:/ê¹€ì¢…ì›/ëŒ€í•™êµ/2í•™ë…„/2í•™ê¸°/ë°ì´í„° ì‹œê°í™”/62/code/GetData.R'
 
-# ½ºÄÉÁÙ »ý¼º 
+# ìŠ¤ì¼€ì¤„ ìƒì„± 
 taskscheduler_create(taskname = 'LOL_Data', rscript = dir,
                      schedule = 'DAILY',
                      starttime = "07:00",
-                     startdate = format(Sys.Date(), '%Y/%m/%d'))
+                     startdate = format(Sys.Date()+1, '%Y/%m/%d'))
 
-# ½ºÄÉÁÙ »èÁ¦
+# ìŠ¤ì¼€ì¤„ ì‚­ì œ
 taskscheduler_delete('LOL_Data')
