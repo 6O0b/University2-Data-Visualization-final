@@ -1,72 +1,81 @@
-folder <- "D:/±èÁ¾¿ø/´ëÇÐ±³/2ÇÐ³â/2ÇÐ±â/µ¥ÀÌÅÍ ½Ã°¢È­/62p/data"
+folder <- "D:/ê¹€ì¢…ì›/ëŒ€í•™êµ/2í•™ë…„/2í•™ê¸°/ë°ì´í„° ì‹œê°í™”/62p/data"
 setwd(folder)
 data_list <- dir(folder)
 
 data <- lapply(data_list, function(x) read.table(x))
 
-# 2019.12.15 ±âÁØ (9.24 ÆÐÄ¡ 2ÀÏ ÈÄ)
-  data_19.12.15 <- read.table("2019-12-14-23-25")
-  str(data_19.12.15)
-  attach(data_19.12.15)
+# 2019.12.14 ê¸°ì¤€ (9.24 íŒ¨ì¹˜ 1ì¼ í›„)
+  data_19.12.14 <- read.table("2019-12-14-23-25")
+  str(data_19.12.14)
+  attach(data_19.12.14)
   
-  # kda´Â ¾î´À Á¤µµÀÏ±î?
+  # kdaëŠ” ì–´ëŠ ì •ë„ì¼ê¹Œ?
     
     hist(kda, breaks = seq(0,20,1), ylim = c(0,200), xaxt = 'n')
     axis(side = 1, at = seq(0,20,2))
     
-    # 2~4 »çÀÌÀÇ °ªÀÌ ¸¹´Ù.
+    # 2~4 ì‚¬ì´ì˜ ê°’ì´ ë§Žë‹¤.
     
       
-  # °¡Àå ¸¹ÀÌ ¼±È£ÇÏ´Â ¶óÀÎÀº ¾îµðÀÏ±î?
+  # ê°€ìž¥ ë§Žì´ ì„ í˜¸í•˜ëŠ” ë¼ì¸ì€ ì–´ë””ì¼ê¹Œ?
   
-    line_data <- sort(table(¼±È£.¶óÀÎ))
+    line_data <- sort(table(ì„ í˜¸.ë¼ì¸))
     
-    barplot(line_data, main = "·©Ä¿µéÀÌ ¼±È£ÇÏ´Â ¶óÀÎ", 
+    barplot(line_data, main = "ëž­ì»¤ë“¤ì´ ì„ í˜¸í•˜ëŠ” ë¼ì¸", 
             horiz = T, xlim = c(0,150) )
     
-    # ¿¹»ó´ë·Î ¿µÇâ·ÂÀÌ °­ÇÑ ¹Ìµå¸¦ Á¦ÀÏ ¼±È£ÇÑ´Ù. ¿äÁò ¸ÞÅ¸°¡ ¿øµô·¯´Â ÇÏµåÄ³¸®°¡ Èûµçµ¥ ÀÌ´Â Åë°è¿¡ ±×´ë·Î ³ªÅ¸³­´Ù.
+    # ì˜ˆìƒëŒ€ë¡œ ì˜í–¥ë ¥ì´ ê°•í•œ ë¯¸ë“œë¥¼ ì œì¼ ì„ í˜¸í•œë‹¤. ìš”ì¦˜ ë©”íƒ€ê°€ ì›ë”œëŸ¬ëŠ” í•˜ë“œìºë¦¬ê°€ íž˜ë“ ë° ì´ëŠ” í†µê³„ì— ê·¸ëŒ€ë¡œ ë‚˜íƒ€ë‚œë‹¤.
     
     
-  # °¢ ¶óÀÎº° ½Â·üÀÇ º¯È­´Â ¾î¶³±î?
+  # ê° ë¼ì¸ë³„ ìŠ¹ë¥ ì˜ ë³€í™”ëŠ” ì–´ë–¨ê¹Œ?
     
-    # ºÐÆ÷ È®ÀÎ 
+    # ë¶„í¬ í™•ì¸ 
     par(mfrow = c(3,2))
-    for( i in levels(¼±È£.¶óÀÎ) ) {
-      hist(½Â·ü[¼±È£.¶óÀÎ==i], main = paste0(i," ½Â·ü ºÐÆ÷"),
-            xlab = "½Â·ü", xlim = c(0,100), breaks = seq(0,100,5))
+    for( i in levels(ì„ í˜¸.ë¼ì¸) ) {
+      hist(ìŠ¹ë¥ [ì„ í˜¸.ë¼ì¸==i], main = paste0(i," ìŠ¹ë¥  ë¶„í¬"),
+            xlab = "ìŠ¹ë¥ ", xlim = c(0,100), ylim = c(0,0.05), 
+            breaks = seq(0,100,5), prob = T)
     }
     
-    # Æò±ÕÀ¸·Î °è»ê 
-    ratioofline <- sort(tapply(½Â·ü, ¼±È£.¶óÀÎ, mean))
+    # í‰ê· ìœ¼ë¡œ ê³„ì‚° 
+    ratioofline <- sort(tapply(ìŠ¹ë¥ , ì„ í˜¸.ë¼ì¸, mean))
     par(mfrow = c(1,1))
-    ratioofline_barplot <- barplot(ratioofline, main = "¶óÀÎ º° ½Â·ü", ylim = c(0,100) )
+    ratioofline_barplot <- barplot(ratioofline, main = "ë¼ì¸ ë³„ í‰ê·  ìŠ¹ë¥ ", ylim = c(0,100) )
     text(ratioofline_barplot, ratioofline+2, labels = round(ratioofline, 1))
     
-    # ¿¹»ó´ë·Î ¹Ìµå°¡ ÃÖ»óÀ§, ¿øµôÀÌ ÃÖÇÏÀ§¿´´Ù.
-    # ¼­Æ÷ÅÍ°¡ 2µîÀÎ °ÍÀº ¿¹»ó ¹ÛÀÌ¾úÀ¸³ª, Á¡¼ö´Â ¼­Æ÷ÅÍ°¡ ´õ ¿Ã¸®±â ½±´Ù°í ¾Ë·ÁÁ® ÀÖÀ¸¹Ç·Î Å©°Ô ³î¶øÁö´Â ¾Ê´Ù.
+    # ì˜ˆìƒëŒ€ë¡œ ë¯¸ë“œê°€ ìµœìƒìœ„, ì›ë”œì´ ìµœí•˜ìœ„ì˜€ë‹¤.
+    # ì„œí¬í„°ê°€ 2ë“±ì¸ ê²ƒì€ ì˜ˆìƒ ë°–ì´ì—ˆìœ¼ë‚˜, ì ìˆ˜ëŠ” ì„œí¬í„°ê°€ ë” ì˜¬ë¦¬ê¸° ì‰½ë‹¤ê³  ì•Œë ¤ì ¸ ìžˆìœ¼ë¯€ë¡œ í¬ê²Œ ë†€ëžì§€ëŠ” ì•Šë‹¤.
     
-  # °¡Àå ¸¹ÀÌ ¼±È£ÇÏ´Â Ã¨ÇÇ¾ð Top15 ¹× ±×¿¡ µû¸¥ ½Â·ü 
+  # ê°€ìž¥ ë§Žì´ ì„ í˜¸í•˜ëŠ” ì±”í”¼ì–¸ Top15 ë° ê·¸ì— ë”°ë¥¸ ìŠ¹ë¥  
     
     n <- 15
-    # °¡Àå ¸¹ÀÌ ¼±È£ÇÑ Ã¨ÇÇ¾ð Top15
-    table_champ <- sort(table(¼±È£.Ã¨ÇÇ¾ð), decreasing = T)
-    data_champn <- table_champ[1:n]
+    par(mfrow = c(2,1))
     
-    champn_barplot <- barplot(data_champn, ylim = c(0,50))
-    text(champn_barplot, data_champn+2, labels = paste0(data_champn,"È¸"))
+    # ë³€ìˆ˜ ì§€ì • 
+    table_champ <- sort(table(ì„ í˜¸.ì±”í”¼ì–¸), decreasing = T)
+    data_champn <- table_champ[table_champ>=min(table_champ[1:n])]
     
-    # Top15 Ã¨ÇÇ¾ð ºóµµ ÀÌ»ó Ã¨ÇÇ¾ðÀÇ Æò±Õ ½Â·ü 
-    meanratioofchamp <- round(tapply(½Â·ü, ¼±È£.Ã¨ÇÇ¾ð, mean),1)
-    champn_ratio <- sort(meanratioofchamp[table(¼±È£.Ã¨ÇÇ¾ð) >= min(data_champn)])
+    meanratioofchamp <- round(tapply(ìŠ¹ë¥ , ì„ í˜¸.ì±”í”¼ì–¸, mean),1)
+    champn_ratio <- sort(meanratioofchamp[table(ì„ í˜¸.ì±”í”¼ì–¸) >= min(data_champn)], decreasing = T)
     
     countchamp <- c()
     for( i in 1:length(champn_ratio) ) {
       countchamp[i] <- table_champ[names(table_champ)==names(champn_ratio)[i]]
     }
     
-    champn_ratio_barplot <- barplot(champn_ratio, ylim = c(0,70))
-    text(champn_ratio_barplot, champn_ratio+2, labels = paste0(champn_ratio,"%"))
-    text(champn_ratio_barplot, champn_ratio+5, labels = paste0(countchamp,"È¸"))
+    ratiochamp <- c()
+    for( i in 1:length(data_champn) ) {
+      ratiochamp[i] <- meanratioofchamp[names(table_champ)==names(data_champn)[i]]
+    }
     
-    # Á¤±ÛÀº ¸® ½Å°ú ·º»çÀÌ, ¼­Æ÷ÅÍ´Â ³ëÆ¿·¯½º¿Í ¾²·¹½¬°¡ ¾ÐµµÀûÀÌ´Ù.
-    # ¾ÆÆ®·Ï½º´Â ÇÔÁ¤Ä«µå¶ó°í º¸¾Æµµ ¹«¹æÇÒ °ÍÀÌ´Ù.
+    # ê·¸ëž˜í”„ 
+    champn_barplot <- barplot(data_champn, ylim = c(0,50), main = "ì±”í”¼ì–¸ ì„ í˜¸ ë¹ˆë„ì™€ ìŠ¹ë¥  (ë¹ˆë„ ê¸°ì¤€ ì •ë ¬)")
+    text(champn_barplot, data_champn+2, labels = paste0(data_champn,"íšŒ"))
+    text(champn_barplot, data_champn+6, labels = paste0(ratiochamp,"%"))
+    
+    champn_ratio_barplot <- barplot(champn_ratio, ylim = c(0,70), main = "ì±”í”¼ì–¸ ì„ í˜¸ ë¹ˆë„ì™€ ìŠ¹ë¥  (ìŠ¹ë¥  ê¸°ì¤€ ì •ë ¬)")
+    text(champn_ratio_barplot, champn_ratio+3, labels = paste0(champn_ratio,"%"))
+    text(champn_ratio_barplot, champn_ratio+7, labels = paste0(countchamp,"íšŒ"))
+    
+    # ì •ê¸€ì€ ë¦¬ ì‹ ê³¼ ë ‰ì‚¬ì´, ì„œí¬í„°ëŠ” ë…¸í‹¸ëŸ¬ìŠ¤ì™€ ì“°ë ˆì‰¬ê°€ ì••ë„ì ì´ë‹¤.
+    # ì•„íŠ¸ë¡ìŠ¤ëŠ” í•¨ì •ì¹´ë“œë¼ê³  ë³´ì•„ë„ ë¬´ë°©í•  ê²ƒì´ë‹¤.
