@@ -16,13 +16,13 @@
 
 1. 500위까지의 플레이어 닉네임을 불러옵니다.
 
->사진1
+![1](https://user-images.githubusercontent.com/58083333/70853029-e9fc5f00-1eeb-11ea-8d34-e9923a20132e.PNG)
 
 2. 해당 플레이어의 세부 정보 창에 접속하여 솔로랭크 정보를 추출합니다.
 
->사진2
+![2](https://user-images.githubusercontent.com/58083333/70853031-ec5eb900-1eeb-11ea-9d7d-c7ac25b711f3.PNG)
 
->사진3
+![3](https://user-images.githubusercontent.com/58083333/70853033-ed8fe600-1eeb-11ea-82ed-8f028f5a48b3.PNG)
 
 
 #### 발전 방향
