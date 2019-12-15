@@ -18,6 +18,7 @@ bringinfor <- function( url ) {
   filter$clickElement()
   
   # 각 정보 추출 
+    # 로딩 시간을 고려하여 tryCatch 함수 사용
     infor_table <- NULL
     while(is.null(infor_table)){
       Sys.sleep(0.1)
@@ -26,6 +27,7 @@ bringinfor <- function( url ) {
     }
     
     # 선호 포지션, 해당 포지션 승률 
+    # 로딩 시간을 고려하여 tryCatch 함수 사용
     line_table <- NULL
     while(is.null(line_table)){
       Sys.sleep(0.5)
