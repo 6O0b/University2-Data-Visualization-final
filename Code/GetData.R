@@ -20,7 +20,7 @@ bringinfor <- function( url ) {
   # 각 정보 추출 
     infor_table <- NULL
     while(is.null(infor_table)){
-      Sys.sleep(0.5)
+      Sys.sleep(0.1)
       infor_table <- tryCatch({remDr$findElement(using = 'xpath', value = "//*[@id=\"SummonerLayoutContent\"]/div[2]/div[2]/div/div[2]")},
                              error = function(e){NULL})
     }
